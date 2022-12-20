@@ -1,0 +1,23 @@
+server:
+  port: 8999
+eureka:
+  instance:
+    hostname: localhost
+spring:
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: contact-service
+        uri: lb://contact-service
+        predicates:
+        - Path=/role/**
+      - id: user-service
+        uri: lb://user-service
+        predicates:
+        - Path=/user/**
